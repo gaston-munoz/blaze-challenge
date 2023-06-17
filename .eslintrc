@@ -1,0 +1,26 @@
+{
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "require-jsdoc": 0,
+    "indent": ["error", 2],
+    "max-len": ["error", {
+      "code": 120,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "no-unused-vars": "error"
+  },
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "globals": {
+    "expect": true,
+    "assert": true
+  }
+}
+                                                                                                               
