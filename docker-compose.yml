@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  api:
+    container_name: api
+    restart: always
+    build: .
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "5000:5000"
+    # volumes: 
+    #   - /app_v2/alCarritoo-api/uploads:/usr/src/app/uploads
+    links:
+      - db:postgres
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/db:/var/lib/postgresql/data
+
+volumes:
+  db: 
+    

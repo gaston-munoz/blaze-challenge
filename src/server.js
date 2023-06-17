@@ -5,6 +5,7 @@ import { configDotenv } from 'dotenv'
 import morgan from 'morgan'
 import router from './api/routes/index.js'
 import { dirname } from './common/utils.js'
+import { checkDBConnection } from './storage/db-connection.js'
 
 const { __dirname } = dirname(import.meta)
 
@@ -12,7 +13,6 @@ configDotenv({
   path: path.join(__dirname, '../.env')
 })
 
-// import './storage/db-connection'
 const app = express()
 
 app.use(cors());
@@ -25,4 +25,5 @@ app.use('/api', router)
 app.listen(process.env.PORT, () => {
   console.log('NODE_ENV', process.env.NODE_ENV)
   console.log('Server listening on port', process.env.PORT)
+  checkDBConnection()
 });
