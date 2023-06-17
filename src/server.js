@@ -22,8 +22,9 @@ app.use(morgan('dev'))
 
 app.use('/api', router)
 
+checkDBConnection()
+
 app.listen(process.env.PORT, () => {
   console.log('NODE_ENV', process.env.NODE_ENV)
   console.log('Server listening on port', process.env.PORT)
-  checkDBConnection()
 });

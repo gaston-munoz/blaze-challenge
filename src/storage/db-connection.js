@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 
-const dbConnection = new Sequelize('database', 'username', 'password', {
+const dbConnection = new Sequelize('tournament_management_db', 'user', 'example', {
   dialect: 'postgres',
-  host: 'my.server.tld',
-  port: 12345,
+  host: 'postgres-container',
+  port: 5432,
   ssl: true,
   sync: { force: true },
 })
