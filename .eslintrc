@@ -12,7 +12,7 @@
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true }]
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }]
   },
   "env": {
     "node": true,

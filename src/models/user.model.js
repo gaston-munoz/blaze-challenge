@@ -1,4 +1,5 @@
 import { DataTypes, Model } from 'sequelize'
+import { ROLES } from '../common/constants.js';
 import { dbConnection } from '../storage/db-connection.js'
 
 export class User extends Model {}
@@ -16,6 +17,10 @@ User.init({
   },
   password: {
     type: DataTypes.STRING,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.ENUM(ROLES.USER, ROLES.ADMIN),
     allowNull: false,
   }
 }, {

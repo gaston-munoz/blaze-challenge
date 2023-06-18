@@ -26,13 +26,21 @@ export class AuthService {
     return token
   }
 
+  verifyToken(token) {
+    const payload = this.tokenGenerator.verify(token, this.privateKey)
+
+    console.log({ payload })
+
+    return payload
+  }
+
 
   async hashPassword(password) {
     const salt = await this.hasher.genSalt(10)
     return this.hasher.hash(password, salt)
   }
 
-  async verifyPassword(password, encrypted) {
+  verifyPassword(password, encrypted) {
     return this.hasher.compare(password, encrypted)
   }
 }

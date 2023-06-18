@@ -1,4 +1,4 @@
- 
+
 const create = (req, res) => {
   const { body } = req
   console.log('body', body)
@@ -11,6 +11,7 @@ const getAll = (req, res) => {
   console.log('body', body)
   
   res.send('GET All TOURNAMENT')
+
 }
 
 export { create, getAll }

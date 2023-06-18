@@ -1,3 +1,4 @@
+import { ROLES } from '../common/constants.js'
 import { UserModel } from '../models/index.js'
 import { AuthService } from './auth.service.js'
 
@@ -9,6 +10,7 @@ export class UserService {
 
   async create(user) {
     user.password = await this.authService.hashPassword(user.password)
+    user.role = ROLES.USER
     const { dataValues } = await this.userModel.create(user)
     console.log('user saved', dataValues)
     const { password: _, ...cleanUser } = dataValues

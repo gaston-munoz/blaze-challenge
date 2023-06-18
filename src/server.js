@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import router from './api/routes/index.js'
 import { dirname } from './common/utils.js'
 import { checkDBConnection } from './storage/db-connection.js'
+import { errorHandler } from './api/middlewares/errorHandler.js'
 
 const { __dirname } = dirname(import.meta)
 
@@ -21,9 +22,9 @@ app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
 app.use('/api', router)
+app.use(errorHandler);
 
 checkDBConnection()
-
 app.listen(process.env.PORT, () => {
   console.log('NODE_ENV', process.env.NODE_ENV)
   console.log('Server listening on port', process.env.PORT)
