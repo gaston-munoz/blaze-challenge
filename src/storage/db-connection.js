@@ -1,18 +1,22 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize'
+import config from 'config'
 
-const dbConnection = new Sequelize('tournament_management_db', 'user', 'example', {
+const dbConfig = config.get('dbPostgres')
+
+const dbConnection = new Sequelize(dbConfig.dbName, dbConfig.user, dbConfig.password, {
   dialect: 'postgres',
-  host: 'localhost',
-  port: 5432,
+  host: dbConfig.host,
+  port: dbConfig.port,
   ssl: true,
   sync: { force: true },
+  logging: false,
 })
 
 const checkDBConnection = async () => {
   try {
     await dbConnection.authenticate()
     await dbConnection.sync({ force: true })
-    console.log('Connection has been established successfully.')
+    console.log('DB connection ready')
   } catch (error) {
     console.error('Unable to connect to the database:', error.message)
   }

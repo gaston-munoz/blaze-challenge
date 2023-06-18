@@ -1,20 +1,13 @@
 import express, { json, urlencoded } from 'express'
 import cors from 'cors'
-import path from 'path'
-import { configDotenv } from 'dotenv'
 import morgan from 'morgan'
+import config from 'config'
 import router from './api/routes/index.js'
-import { dirname } from './common/utils.js'
 import { checkDBConnection } from './storage/db-connection.js'
 import { errorHandler } from './api/middlewares/errorHandler.js'
 
-const { __dirname } = dirname(import.meta)
-
-configDotenv({
-  path: path.join(__dirname, '../.env')
-})
-
 const app = express()
+const appConfig = config.get('app')
 
 app.use(cors());
 app.use(json());
@@ -25,7 +18,7 @@ app.use('/api', router)
 app.use(errorHandler);
 
 checkDBConnection()
-app.listen(process.env.PORT, () => {
-  console.log('NODE_ENV', process.env.NODE_ENV)
-  console.log('Server listening on port', process.env.PORT)
+app.listen(appConfig.port, () => {
+  console.log('APP STAGE', appConfig.stage)
+  console.log('Server listening on port', appConfig.port)
 });

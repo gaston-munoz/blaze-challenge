@@ -12,7 +12,8 @@
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }]
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }],
+    "quotes": ["error", "single"]
   },
   "env": {
     "node": true,

@@ -1,6 +1,6 @@
-import { STATUS_CODE } from "../../common/constants.js"
-import { AuthService } from "../../services/auth.service.js"
-import { genError } from "./errorHandler.js"
+import { STATUS_CODE } from '../../common/constants.js'
+import { AuthService } from '../../services/auth.service.js'
+import { genError } from './errorHandler.js'
 
 export const authenticate = (roles = []) => (req, res, next) => {
   try {

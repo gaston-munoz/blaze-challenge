@@ -1,4 +1,4 @@
-import { STATUS_CODE } from "../../common/constants.js"
+import { STATUS_CODE } from '../../common/constants.js'
 
 export const errorHandler = (error, req, res, _) => {
   console.log('ERROR HANDLER', error)
