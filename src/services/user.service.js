@@ -19,15 +19,23 @@ export class UserService {
 
   async signIn(email, password) {
     const user = await this.userModel.findOne({ where: { email }})
-    if (!user) throw new Error('User not found')
+    if (!user) return {
+      error: 'User not found',
+    }
 
     const isValidPassword = await this.authService.verifyPassword(password, user.password)
-    if (!isValidPassword) throw new Error('Invalid Password')
+    if (!isValidPassword) return {
+      error: 'Invalid Password',
+    }
 
     console.log('user signin', user)
 
     const token = this.authService.genToken(user)
 
     return  { token, user} 
+  }
+
+  findByEmail(email) {
+    return this.userModel.findOne({ where: { email }})
   }
 }

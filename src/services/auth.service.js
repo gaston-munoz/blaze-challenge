@@ -1,14 +1,17 @@
 import { UserModel } from '../models/index.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import config from 'config'
 
 export class AuthService {
   constructor(userModel = null, tokenGenerator = null, hasher = null) {
+    const authConfig = config.get('auth')
     this.userModel = userModel || UserModel
     this.tokenGenerator = tokenGenerator || jwt
-    this.privateKey = process.env.PRIVATE_KEY
+    this.privateKey = authConfig.privateKey
     this.hasher = hasher || bcrypt
-
+    this.timeToExpireToken = authConfig.timeToExpireToken
+    this.tokenAlgorithm = authConfig.tokenAlgorithm
   }
 
   genToken(user) {
@@ -18,8 +21,8 @@ export class AuthService {
       name: user.name,
       role: user.name,
     }, this.privateKey, {
-      algorithm: 'HS256',
-      expiresIn: '1d'
+      algorithm: this.tokenAlgorithm,
+      expiresIn: this.timeToExpireToken
     })
 
     console.log({ token })
@@ -34,7 +37,6 @@ export class AuthService {
 
     return payload
   }
-
 
   async hashPassword(password) {
     const salt = await this.hasher.genSalt(10)

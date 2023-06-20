@@ -10,6 +10,8 @@ const STAGES = Object.freeze({
   PROD: 'production',
 })
 
+exports.STAGES = STAGES
+
 module.exports = {
   app: {
     port: process.env.PORT,
@@ -23,4 +25,9 @@ module.exports = {
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
   },
+  auth: {
+    privateKey: process.env.PRIVATE_KEY,
+    timeToExpireToken: '1d',
+    tokenAlgorithm: 'HS256'
+  }
 }
