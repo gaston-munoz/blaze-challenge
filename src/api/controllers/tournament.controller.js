@@ -8,7 +8,7 @@ const create = async (req, res, next) => {
     console.log('body', body, user)
     const tournamentService = new TournamentService()
     const { savedTournament, error } = await tournamentService.create(body.tournamentCode, user)
-    if (error) next(genError(STATUS_CODE.BAD_REQ, error))
+    if (error) throw genError(STATUS_CODE.BAD_REQ, error)
 
     res.send({
       success: true,
@@ -17,7 +17,6 @@ const create = async (req, res, next) => {
   } catch(error) {
     next(genError(STATUS_CODE.INT_SERV_ERROR, error.message))
   }
-
 }
 
 const getAll = async (req, res, next) => {
@@ -37,7 +36,7 @@ const getAll = async (req, res, next) => {
 const getAllByUser = async (req, res, next) => {
   try {
     const tournamentService = new TournamentService()
-    const allTournaments = await tournamentService.findByUser()
+    const allTournaments = await tournamentService.findByUser(req.user)
   
     res.send({
       success: true,

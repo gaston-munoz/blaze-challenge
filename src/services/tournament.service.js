@@ -23,6 +23,16 @@ export class TournamentService {
       error: 'Tournament not exists'
     }
 
+    const userTournament = await this.tournamentModel.findOne({ 
+      where: { 
+        externalId: tournament.id, 
+        userId: user.id 
+      }
+    })
+    if (userTournament) return {
+      error: 'User has already saved this tournament'
+    }
+
     const tournamentToSave = {
       externalId: tournament.id,
       name: tournament.name,
@@ -37,8 +47,13 @@ export class TournamentService {
     return { savedTournament }
   }
 
-  findByUser(user) {
-    return this.tournamentModel.findAll({ where: { userId: user.id }})
+  async findByUser(user) {
+    const { count, rows } = await this.tournamentModel.findAndCountAll({ where: { userId: user.id }})
+    console.log(rows)
+    return {
+      tournaments: rows,
+      count, 
+    }
   }
 
   // async signIn(email, password) {

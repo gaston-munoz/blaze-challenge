@@ -7,6 +7,7 @@ Tournament.init({
   externalId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -28,6 +29,10 @@ Tournament.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  }
 }, {
   sequelize: dbConnection,
 })
