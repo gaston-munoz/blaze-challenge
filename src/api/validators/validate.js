@@ -1,4 +1,4 @@
-import { genError } from '../middlewares/errorHandler'
+import { genError } from '../middlewares/errorHandler.js'
 
 export const validate = (schema) => (req, res, next) => {
   try {

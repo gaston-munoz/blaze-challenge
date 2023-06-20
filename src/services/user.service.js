@@ -18,15 +18,18 @@ export class UserService {
   }
 
   async signIn(email, password) {
-    const user = await this.userModel.findOne({ where: { email }})
-    if (!user) return {
+    const savedUser = await this.userModel.findOne({ where: { email }})
+    if (!savedUser) return {
       error: 'User not found',
     }
 
-    const isValidPassword = await this.authService.verifyPassword(password, user.password)
+    const isValidPassword = await this.authService.verifyPassword(password, savedUser.password)
     if (!isValidPassword) return {
       error: 'Invalid Password',
     }
+
+    const user = savedUser.dataValues
+    delete user.password
 
     console.log('user signin', user)
 
