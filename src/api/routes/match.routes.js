@@ -5,7 +5,18 @@ import { authenticate } from '../middlewares/auth.js'
 
 const router = Router({ strict: true })
 
-router.post('/', authenticate([ROLES.USER]), MactController.create)
-router.get('/', MactController.getAll)
+router
+  .route('/')
+  .post(authenticate([ROLES.USER]), MactController.create)
+  .get(MactController.getAll)
+
+// router
+//   .route('/users')
+//   .get(authenticate([ROLES.USER]), MactController.getAllByUser)
+
+// router
+//   .route('/:idMatch')
+//   .get(authenticate([ROLES.USER]), MactController.getOneByUser)
+//   .delete(authenticate([ROLES.USER]), MactController.getByUser)
 
 export default router

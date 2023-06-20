@@ -14,10 +14,10 @@ export const errorHandler = (error, req, res, _) => {
 }
 
 export const genError = (code, message) => {
-  const err = new Error;
+  const err = new Error
   Object.assign(err, {
     statusCode: code,
     message,
   })
-  return err;
+  return err
 }

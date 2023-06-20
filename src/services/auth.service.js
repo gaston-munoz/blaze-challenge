@@ -1,11 +1,11 @@
-import { UserModel } from '../models/index.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from 'config'
+import { UserModel } from '../models/index.js'
 
 export class AuthService {
-  constructor(userModel = null, tokenGenerator = null, hasher = null) {
-    const authConfig = config.get('auth')
+  constructor(userModel = null, tokenGenerator = null, hasher = null, conf = null) {
+    const authConfig = conf || config.get('auth')
     this.userModel = userModel || UserModel
     this.tokenGenerator = tokenGenerator || jwt
     this.privateKey = authConfig.privateKey
@@ -19,7 +19,7 @@ export class AuthService {
       id: user.id,  
       email: user.email,
       name: user.name,
-      role: user.name,
+      role: user.role,
     }, this.privateKey, {
       algorithm: this.tokenAlgorithm,
       expiresIn: this.timeToExpireToken

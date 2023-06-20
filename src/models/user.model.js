@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize'
-import { ROLES } from '../common/constants.js';
+import { ROLES } from '../common/constants.js'
 import { dbConnection } from '../storage/db-connection.js'
 
 export class User extends Model {}
@@ -25,6 +25,4 @@ User.init({
   }
 }, {
   sequelize: dbConnection,
-});
-
-console.log(User === dbConnection.models.User)
+})

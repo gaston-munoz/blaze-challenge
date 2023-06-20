@@ -4,7 +4,10 @@ import { genError } from './errorHandler.js'
 
 export const authenticate = (roles = []) => (req, res, next) => {
   try {
-    const token = req.headers['X-Authorization']
+    console.log(req.headers)
+    const token = req.headers['x-authorization']
+    console.log('token', token)
+
     if (!token) throw new Error('Missing Token')
     const authService = new AuthService()
     const payload = authService.verifyToken(token)

@@ -13,7 +13,8 @@
       "ignoreTemplateLiterals": true
     }],
     "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }],
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"]
   },
   "env": {
     "node": true,

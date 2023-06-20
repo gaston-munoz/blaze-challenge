@@ -29,5 +29,10 @@ module.exports = {
     privateKey: process.env.PRIVATE_KEY,
     timeToExpireToken: '1d',
     tokenAlgorithm: 'HS256'
-  }
+  },
+  footballAPI: {
+    endpoint: 'https://api.football-data.org/v4',
+    apiKey: process.env.FOOTBALL_API_KEY,
+    tournamentsPath: '/competitions',
+  },
 }

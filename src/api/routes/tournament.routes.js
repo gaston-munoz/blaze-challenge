@@ -5,7 +5,18 @@ import { authenticate } from '../middlewares/auth.js'
 
 const router = Router({ strict: true })
 
-router.post('/', authenticate([ROLES.USER]), TournamentController.create)
-router.get('/', TournamentController.getAll)
+router
+  .route('/')
+  .post(authenticate([ROLES.USER]), TournamentController.create)
+  .get(TournamentController.getAll)
+
+router
+  .route('/users')
+  .get(authenticate([ROLES.USER]), TournamentController.getAllByUser)
+
+// router
+//   .route('/:idTournament')
+//   .get(authenticate([ROLES.USER]), TournamentController.getOneByUser)
+//   .delete(authenticate([ROLES.USER]), TournamentController.getByUser)
 
 export default router
