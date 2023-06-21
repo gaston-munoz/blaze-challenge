@@ -47,4 +47,20 @@ const getAllByUser = async (req, res, next) => {
   }
 }
 
-export { create, getAll, getAllByUser }
+const deleteById = async (req, res, next) => {
+  try {
+    const { tournamentId } = req.params
+    const tournamentService = new TournamentService()
+    const { tournament, error } = await tournamentService.deleteById(tournamentId)
+    if (error) throw genError(STATUS_CODE.BAD_REQ, error)
+
+    res.send({
+      success: true,
+      tournament,
+    })
+  } catch (error) {
+    next(genError(STATUS_CODE.INT_SERV_ERROR, error.message))
+  }
+}
+
+export { create, getAll, getAllByUser, deleteById }

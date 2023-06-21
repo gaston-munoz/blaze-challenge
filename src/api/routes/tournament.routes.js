@@ -14,9 +14,9 @@ router
   .route('/users')
   .get(authenticate([ROLES.USER]), TournamentController.getAllByUser)
 
-// router
-//   .route('/:idTournament')
+router
+  .route('/:tournamentId')
 //   .get(authenticate([ROLES.USER]), TournamentController.getOneByUser)
-//   .delete(authenticate([ROLES.USER]), TournamentController.getByUser)
+  .delete(authenticate([ROLES.USER]), TournamentController.deleteById)
 
 export default router

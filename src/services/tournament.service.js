@@ -56,6 +56,18 @@ export class TournamentService {
     }
   }
 
+  async deleteById(id) {
+    const tournament = await this.tournamentModel.findOne({ where: { id }})
+    if (!tournament) return {
+      error: 'Tournament not exists'
+    }
+    await this.tournamentModel.destroy({ where: { id }})
+
+    return { tournament }
+  }
+
+  
+
   // async signIn(email, password) {
   //   const savedUser = await this.userModel.findOne({ where: { email }})
   //   if (!savedUser) return {
