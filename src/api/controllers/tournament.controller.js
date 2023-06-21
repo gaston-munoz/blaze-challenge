@@ -5,7 +5,6 @@ import { genError } from '../middlewares/errorHandler.js'
 const create = async (req, res, next) => {
   try {
     const { body, user } = req
-    console.log('body', body, user)
     const tournamentService = new TournamentService()
     const { savedTournament, error } = await tournamentService.create(body.tournamentCode, user)
     if (error) throw genError(STATUS_CODE.BAD_REQ, error)

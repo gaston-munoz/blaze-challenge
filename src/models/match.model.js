@@ -1,56 +1,94 @@
 import { DataTypes, Model } from 'sequelize'
 import { dbConnection } from '../storage/db-connection.js'
-import { UserModel } from './index.js'
+import { TournamentModel, UserModel } from './index.js'
 
-export class Tournament extends Model {}
-Tournament.init({
+export class Match extends Model {}
+Match.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: false,
+    unique: true,
   },
   externalId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
-  name: {
+  status: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  type: {
+  utcDate: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  emblem: {
+  group: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  regionName: {
+  winner: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  regionFlag: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   userId: {
     type: DataTypes.INTEGER,
     primaryKey: true
-  }
+  },
+  tournamentId: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  areaName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  areaFlag: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  awayTeamName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  awayTeamCrest: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  homeTeamName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  homeTeamCrest: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
   sequelize: dbConnection,
 })
 
-UserModel.hasMany(Tournament, {
+UserModel.hasMany(Match, {
   foreignKey: 'userId',
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 })
 
-Tournament.belongsTo(UserModel, {
+Match.belongsTo(UserModel, {
   foreignKey: 'userId',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  allowNull: false,
+})
+
+TournamentModel.hasMany(Match, {
+  foreignKey: 'tournamentId',
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 })
 
+Match.belongsTo(TournamentModel, {
+  foreignKey: 'tournamentId',
+  onDelete: 'RESTRICT',
+  onUpdate: 'RESTRICT',
+  allowNull: true,
+})

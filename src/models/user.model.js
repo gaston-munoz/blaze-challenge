@@ -25,4 +25,12 @@ User.init({
   }
 }, {
   sequelize: dbConnection,
+  defaultScope: {
+    attributes: { exclude: ['password'] },
+  },
+  scopes: {
+    withPassword: {
+      attributes: { },
+    }
+  }
 })

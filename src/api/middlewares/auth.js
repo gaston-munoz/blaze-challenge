@@ -4,10 +4,7 @@ import { genError } from './errorHandler.js'
 
 export const authenticate = (roles = []) => async (req, res, next) => {
   try {
-    console.log(req.headers)
     const token = req.headers['x-authorization']
-    console.log('token', token)
-
     if (!token) throw new Error('Missing Token')
     const authService = new AuthService()
     const payload = await authService.verifyToken(token)
@@ -16,7 +13,6 @@ export const authenticate = (roles = []) => async (req, res, next) => {
 
     next()
   } catch (error) {
-    console.log('AUTH ERROR', error)
     next(genError(STATUS_CODE.UNAUTH, error.message))
   }
 }

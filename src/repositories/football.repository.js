@@ -1,4 +1,5 @@
 import config from 'config'
+import fetch from 'node-fetch'
 
 export class FootballRepository {
   constructor(conf = null) {
@@ -15,7 +16,7 @@ export class FootballRepository {
   async request(path) {
     const { endpoint } = this.config
     const response = await fetch(`${endpoint}${path}`, {
-      method: 'GET',
+      method: this.config.method,
       headers: this.getHeaders()
     })
     const data = await response.json()
@@ -33,4 +34,15 @@ export class FootballRepository {
     return this.request(this.config.tournamentsPath + `/${code}`)
   }
 
+  getAllMatches() {
+    return this.request(this.config.matchesPath)
+  }
+
+  getMatchById(id) {
+    return this.request(this.config.matchesPath + `/${id}`)
+  }
+
+  getAllMatchesByTournament(code) {
+    return this.request(this.config.tournamentsPath + `/${code}/` + this.config.matchesPath)
+  }
 }

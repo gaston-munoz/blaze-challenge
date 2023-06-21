@@ -12,13 +12,12 @@ export class UserService {
     user.password = await this.authService.hashPassword(user.password)
     user.role = ROLES.USER
     const { dataValues } = await this.userModel.create(user)
-    console.log('user saved', dataValues)
     const { password: _, ...cleanUser } = dataValues
     return cleanUser
   }
 
   async signIn(email, password) {
-    const savedUser = await this.userModel.findOne({ where: { email }})
+    const savedUser = await this.userModel.scope('withPassword').findOne({ where: { email }})
     if (!savedUser) return {
       error: 'User not found',
     }
@@ -30,8 +29,6 @@ export class UserService {
 
     const user = savedUser.dataValues
     delete user.password
-
-    console.log('user signin', user)
 
     const token = this.authService.genToken(user)
 

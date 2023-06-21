@@ -8,6 +8,7 @@ Tournament.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: false,
+    unique: true,
   },
   externalId: {
     type: DataTypes.INTEGER,
@@ -26,11 +27,11 @@ Tournament.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  regionName: {
+  areaName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  regionFlag: {
+  areaFlag: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -53,4 +54,3 @@ Tournament.belongsTo(UserModel, {
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 })
-

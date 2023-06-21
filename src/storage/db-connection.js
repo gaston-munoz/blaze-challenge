@@ -4,7 +4,7 @@ import config from 'config'
 const dbConfig = config.get('dbPostgres')
 
 const dbConnection = new Sequelize(dbConfig.dbName, dbConfig.user, dbConfig.password, {
-  dialect: 'postgres',
+  dialect: dbConfig.dialect,
   host: dbConfig.host,
   port: dbConfig.port,
   ssl: true,

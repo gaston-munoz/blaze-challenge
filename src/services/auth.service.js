@@ -25,15 +25,11 @@ export class AuthService {
       expiresIn: this.timeToExpireToken
     })
 
-    console.log({ token })
-
     return token
   }
 
   async verifyToken(token) {
     const payload = this.tokenGenerator.verify(token, this.privateKey)
-    console.log({ payload })
-
     const user = await this.userModel.findByPk(payload.id)
     if (!user) throw new Error('User not exists')
 

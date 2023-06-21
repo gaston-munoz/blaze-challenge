@@ -19,6 +19,7 @@ module.exports = {
     isDevelop: process.env.NODE_ENV === STAGES.DEV,
   },
   dbPostgres: {
+    dialect: 'postgres',
     port: process.env.POSTGRES_PORT,
     host: process.env.POSTGRES_HOST,
     dbName: process.env.POSTGRES_DB,
@@ -34,5 +35,7 @@ module.exports = {
     endpoint: 'https://api.football-data.org/v4',
     apiKey: process.env.FOOTBALL_API_KEY,
     tournamentsPath: '/competitions',
+    matchesPath: '/matches',
+    method: 'GET',
   },
 }
