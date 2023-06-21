@@ -3,8 +3,8 @@ import { genError } from '../middlewares/errorHandler.js'
 import { validate } from './validate.js'
 
 const schema = joi.object({
-  email: joi.string().required().error(genError(400, 'EMAIL must be provide')),
-  password: joi.string().required().error(genError(400, 'PASSWORD must be provide')),
+  email: joi.string().email().required().error(genError(400, 'EMAIL must be provide')),
+  password: joi.string().min(4).required().error(genError(400, 'PASSWORD must be provide')),
 })
   .required()
 
