@@ -1,9 +1,9 @@
-import { TournamentModel } from '../models/index.js'
-import { FootballRepository } from '../repositories/football.repository.js'
+import { FootballRepository } from '../repositories/footballAPI.repository.js'
+import { TournamentRepository } from '../repositories/index.js'
 
 export class TournamentService {
-  constructor(tournamentModel = null, footballRepository = null) {
-    this.tournamentModel = tournamentModel || TournamentModel
+  constructor(tournamentRepository = null, footballRepository = null) {
+    this.tournamentRepository = tournamentRepository || new TournamentRepository()
     this.footballRepository = footballRepository || new FootballRepository()
   }
 
@@ -15,17 +15,24 @@ export class TournamentService {
     }
   }
 
+  async findById(id) {
+    const tournament = await this.footballRepository.getTournamentById(id)
+    if (!tournament || tournament.errorCode) return {
+      error: 'Tournament not exists'
+    }
+
+    return { tournament }
+  }
+
   async create(tournamentCode, user) {
     const tournament = await this.footballRepository.getByCode(tournamentCode)
     if (!tournament) return {
       error: 'Tournament not exists'
     }
 
-    const userTournament = await this.tournamentModel.findOne({ 
-      where: { 
-        externalId: tournament.id, 
-        userId: user.id 
-      }
+    const userTournament = await this.tournamentRepository.findOne({
+      externalId: tournament.id, 
+      userId: user.id 
     })
     if (userTournament) return {
       error: 'User has already saved this tournament'
@@ -40,14 +47,13 @@ export class TournamentService {
       areaFlag: tournament.area.flag,
       userId: user.id,
     } 
-    const savedTournament = await this.tournamentModel.create(tournamentToSave)
+    const savedTournament = await this.tournamentRepository.create(tournamentToSave)
 
     return { savedTournament }
   }
 
   async findByUser(user) {
-    const { count, rows } = await this.tournamentModel.findAndCountAll({ where: { userId: user.id }})
-    console.log(rows)
+    const { count, rows } = await this.tournamentRepository.findAndCount({ userId: user.id })
     return {
       tournaments: rows,
       count, 
@@ -55,11 +61,11 @@ export class TournamentService {
   }
 
   async deleteById(id) {
-    const tournament = await this.tournamentModel.findOne({ where: { id }})
+    const tournament = await this.tournamentRepository.findOne({ id })
     if (!tournament) return {
       error: 'Tournament not exists'
     }
-    await this.tournamentModel.destroy({ where: { id }})
+    await this.tournamentRepository.deleteById(id)
 
     return { tournament }
   }

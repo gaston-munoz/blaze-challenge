@@ -1,2 +1,5 @@
 export { validateSignUp } from './sign-up.js'
 export { validateSignIn } from './sign-in.js'
+export { validateParamId } from './param-id.js'
+export { validateTournament } from './create-tournament.js'
+export { validateMatch } from './create-match.js'

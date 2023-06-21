@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
-import { ROLES } from '../common/constants.js'
-import { dbConnection } from '../storage/db-connection.js'
+import { ROLES } from '../../common/constants.js'
+import { dbConnection } from '../db-connection.js'
 
 export class User extends Model {}
 User.init({

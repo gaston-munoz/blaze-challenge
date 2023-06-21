@@ -1,5 +1,5 @@
 import { STATUS_CODE } from '../../common/constants.js'
-import { MatchService } from '../../services/match.service.js'
+import { MatchService } from '../../services/index.js'
 import { genError } from '../middlewares/errorHandler.js'
 
 const getById = async (req, res, next) => {
@@ -64,9 +64,9 @@ const getAllByUser = async (req, res, next) => {
 
 const deleteById = async (req, res, next) => {
   try {
-    const { matchId } = req.params
+    const { id } = req.params
     const matchService = new MatchService()
-    const { match, error } = await matchService.deleteById(matchId)
+    const { match, error } = await matchService.deleteById(id)
     if (error) throw genError(STATUS_CODE.BAD_REQ, error)
 
     res.send({

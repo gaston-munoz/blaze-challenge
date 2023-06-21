@@ -1,5 +1,5 @@
 import { STATUS_CODE } from '../../common/constants.js'
-import { UserService } from '../../services/user.service.js'
+import { UserService } from '../../services/index.js'
 import { genError } from '../middlewares/errorHandler.js'
 
 const signUp = async (req, res, next) => {

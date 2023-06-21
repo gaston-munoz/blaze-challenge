@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize'
-import { dbConnection } from '../storage/db-connection.js'
+import { dbConnection } from '../db-connection.js'
 import { UserModel } from './index.js'
 
 export class Tournament extends Model {}

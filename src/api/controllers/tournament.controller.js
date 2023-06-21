@@ -1,6 +1,22 @@
 import { STATUS_CODE } from '../../common/constants.js'
-import { TournamentService } from '../../services/tournament.service.js'
+import { TournamentService } from '../../services/index.js'
 import { genError } from '../middlewares/errorHandler.js'
+
+const getById = async (req, res, next) => {
+  try {
+    const { matchId } = req.params
+    const tournamentService = new TournamentService()
+    const { tournament, error } = await tournamentService.findById(matchId)
+    if (error) throw genError(STATUS_CODE.BAD_REQ, error)
+
+    res.send({
+      success: true,
+      tournament,
+    })
+  } catch (error) {
+    next(genError(STATUS_CODE.INT_SERV_ERROR, error.message))
+  }
+}
 
 const create = async (req, res, next) => {
   try {
@@ -48,9 +64,9 @@ const getAllByUser = async (req, res, next) => {
 
 const deleteById = async (req, res, next) => {
   try {
-    const { tournamentId } = req.params
+    const { id } = req.params
     const tournamentService = new TournamentService()
-    const { tournament, error } = await tournamentService.deleteById(tournamentId)
+    const { tournament, error } = await tournamentService.deleteById(id)
     if (error) throw genError(STATUS_CODE.BAD_REQ, error)
 
     res.send({
@@ -62,4 +78,4 @@ const deleteById = async (req, res, next) => {
   }
 }
 
-export { create, getAll, getAllByUser, deleteById }
+export { create, getAll, getAllByUser, deleteById, getById }

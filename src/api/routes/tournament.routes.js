@@ -2,12 +2,14 @@ import { Router } from 'express'
 import { ROLES } from '../../common/constants.js'
 import { TournamentController } from '../controllers/index.js'
 import { authenticate } from '../middlewares/auth.js'
+import { validateTournament } from '../validators/create-tournament.js'
+import { validateParamId } from '../validators/param-id.js'
 
 const router = Router({ strict: true })
 
 router
   .route('/')
-  .post(authenticate([ROLES.USER]), TournamentController.create)
+  .post(authenticate([ROLES.USER]), validateTournament, TournamentController.create)
   .get(TournamentController.getAll)
 
 router
@@ -15,8 +17,8 @@ router
   .get(authenticate([ROLES.USER]), TournamentController.getAllByUser)
 
 router
-  .route('/:tournamentId')
-//   .get(authenticate([ROLES.USER]), TournamentController.getOneByUser)
-  .delete(authenticate([ROLES.USER]), TournamentController.deleteById)
+  .route('/:id')
+  .get(validateParamId, TournamentController.getById)
+  .delete(authenticate([ROLES.USER]), validateParamId, TournamentController.deleteById)
 
 export default router

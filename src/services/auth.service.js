@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from 'config'
-import { UserModel } from '../models/index.js'
+import { UserRepository } from '../repositories/index.js'
 
 export class AuthService {
-  constructor(userModel = null, tokenGenerator = null, hasher = null, conf = null) {
+  constructor(userRepository = null, tokenGenerator = null, hasher = null, conf = null) {
     const authConfig = conf || config.get('auth')
-    this.userModel = userModel || UserModel
+    this.userRepository = userRepository || new UserRepository()
     this.tokenGenerator = tokenGenerator || jwt
     this.privateKey = authConfig.privateKey
     this.hasher = hasher || bcrypt
@@ -30,7 +30,7 @@ export class AuthService {
 
   async verifyToken(token) {
     const payload = this.tokenGenerator.verify(token, this.privateKey)
-    const user = await this.userModel.findByPk(payload.id)
+    const user = await this.userRepository.findById(payload.id)
     if (!user) throw new Error('User not exists')
 
     return payload

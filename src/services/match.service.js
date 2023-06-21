@@ -1,10 +1,11 @@
-import { TournamentModel, MatchModel } from '../models/index.js'
-import { FootballRepository } from '../repositories/football.repository.js'
+import { FootballRepository } from '../repositories/footballAPI.repository.js'
+import { TournamentRepository } from '../repositories/tournament.repository.js'
+import { MatchRepository } from '../repositories/index.js'
 
 export class MatchService {
-  constructor(tournamentModel = null, matchModel = null, footballRepository = null) {
-    this.tournamentModel = tournamentModel || TournamentModel
-    this.matchModel = matchModel || MatchModel
+  constructor(tournamentRepository = null, matchRepository = null, footballRepository = null) {
+    this.tournamentRepository = tournamentRepository || new TournamentRepository()
+    this.matchRepository = matchRepository || new MatchRepository()
     this.footballRepository = footballRepository || new FootballRepository()
   }
 
@@ -33,21 +34,17 @@ export class MatchService {
 
     console.log({ match })
 
-    const userMatch = await this.matchModel.findOne({ 
-      where: { 
-        externalId: match.id, 
-        userId: user.id 
-      }
+    const userMatch = await this.matchRepository.findOne({ 
+      externalId: match.id, 
+      userId: user.id 
     })
     if (userMatch) return {
       error: 'Match already exists'
     }
 
-    const existsTournament = await this.tournamentModel.findOne({
-      where: {
-        externalId: match.competition.id, 
-        userId: user.id  
-      }
+    const existsTournament = await this.tournamentRepository.findOne({
+      externalId: match.competition.id, 
+      userId: user.id  
     })
 
 
@@ -67,14 +64,13 @@ export class MatchService {
       homeTeamCrest: match.homeTeam.crest,
     } 
     
-    const savedMatch = await this.matchModel.create(matchToSave)
+    const savedMatch = await this.matchRepository.create(matchToSave)
 
     return { savedMatch }
   }
 
   async findByUser(user) {
-    const { count, rows } = await this.matchModel.findAndCountAll({ where: { userId: user.id }})
-    console.log(rows)
+    const { count, rows } = await this.matchRepository.findAndCount({ userId: user.id })
     return {
       matches: rows,
       count, 
@@ -82,11 +78,11 @@ export class MatchService {
   }
 
   async deleteById(id) {
-    const match = await this.matchModel.findOne({ where: { id }})
+    const match = await this.matchModel.findOne({ id })
     if (!match) return {
       error: 'Match not exists'
     }
-    await this.matchModel.destroy({ where: { id }})
+    await this.matchRepository.deleteById(id)
 
     return { match }
   }

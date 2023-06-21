@@ -1,23 +1,21 @@
 import { ROLES } from '../common/constants.js'
-import { UserModel } from '../models/index.js'
+import { UserRepository } from '../repositories/index.js'
 import { AuthService } from './auth.service.js'
 
 export class UserService {
-  constructor(userModel = null, authService = null) {
-    this.userModel = userModel || UserModel
+  constructor(userRepository = null, authService = null) {
+    this.userRepository = userRepository || new UserRepository()
     this.authService = authService || new AuthService()
   }
 
   async create(user) {
     user.password = await this.authService.hashPassword(user.password)
     user.role = ROLES.USER
-    const { dataValues } = await this.userModel.create(user)
-    const { password: _, ...cleanUser } = dataValues
-    return cleanUser
+    return this.userRepository.create(user)
   }
 
   async signIn(email, password) {
-    const savedUser = await this.userModel.scope('withPassword').findOne({ where: { email }})
+    const savedUser = await this.userRepository.findUserWithPassword(email)
     if (!savedUser) return {
       error: 'User not found',
     }
@@ -36,6 +34,6 @@ export class UserService {
   }
 
   findByEmail(email) {
-    return this.userModel.findOne({ where: { email }})
+    return this.userRepository.findOne({ email })
   }
 }
