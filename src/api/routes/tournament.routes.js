@@ -21,4 +21,8 @@ router
   .get(validateParamId, TournamentController.getById)
   .delete(authenticate([ROLES.USER]), validateParamId, TournamentController.deleteById)
 
+router
+  .route('/:code/matches')
+  .get(TournamentController.getMatchesByCode)
+
 export default router

@@ -1,5 +1,5 @@
 import { STATUS_CODE } from '../../common/constants.js'
-import { TournamentService } from '../../services/index.js'
+import { MatchService, TournamentService } from '../../services/index.js'
 import { genError } from '../middlewares/errorHandler.js'
 
 const getById = async (req, res, next) => {
@@ -78,4 +78,21 @@ const deleteById = async (req, res, next) => {
   }
 }
 
-export { create, getAll, getAllByUser, deleteById, getById }
+const getMatchesByCode = async (req, res, next) => {
+  try {
+    const { code } = req.params
+    const { season } = req.query
+
+    const matchService = new MatchService()
+    const allMatches = await matchService.findByTournament(code, season)
+  
+    res.send({
+      success: true,
+      data: allMatches,
+    })
+  } catch (error) {
+    next(genError(STATUS_CODE.INT_SERV_ERROR, error.message))
+  }
+}
+
+export { create, getAll, getAllByUser, deleteById, getById, getMatchesByCode }

@@ -86,4 +86,12 @@ export class MatchService {
 
     return { match }
   }
+
+  async findByTournament(code, season) {
+    const { count, matches } = await this.footballRepository.getAllMatchesByTournament(code, season)
+    return {
+      count,
+      matches,
+    }
+  }
 }

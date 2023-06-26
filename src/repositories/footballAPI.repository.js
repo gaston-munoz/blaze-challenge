@@ -42,7 +42,12 @@ export class FootballRepository {
     return this.request(this.config.matchesPath + `/${id}`)
   }
 
-  getAllMatchesByTournament(code) {
-    return this.request(this.config.tournamentsPath + `/${code}/` + this.config.matchesPath)
+  getAllMatchesByTournament(code, season) {
+    return this.request(this.config.tournamentsPath + `/${code}/` + this.config.matchesPath + this.getQueryParams(season))
+  }
+
+  getQueryParams(season) {
+    const cleanSeason = Number(season) || new Date().getFullYear()
+    return `?season=${Number(cleanSeason)}`
   }
 }
