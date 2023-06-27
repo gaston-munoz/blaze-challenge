@@ -33,12 +33,16 @@ Tournament.init({
   },
   areaFlag: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   userId: {
     type: DataTypes.INTEGER,
     primaryKey: true
-  }
+  },
+  currentSeason: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 }, {
   sequelize: dbConnection,
 })

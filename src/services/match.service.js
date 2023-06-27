@@ -47,7 +47,6 @@ export class MatchService {
       userId: user.id  
     })
 
-
     const matchToSave = {
       externalId: match.id,
       status: match.status,
@@ -62,6 +61,9 @@ export class MatchService {
       awayTeamCrest: match.awayTeam.crest,
       homeTeamName: match.homeTeam.name,
       homeTeamCrest: match.homeTeam.crest,
+      homeTeamScore: match.score.fullTime.home,
+      awayTeamScore: match.score.fullTime.away,
+      competitionName: match.competition.name,
     } 
     
     const savedMatch = await this.matchRepository.create(matchToSave)
@@ -78,7 +80,7 @@ export class MatchService {
   }
 
   async deleteById(id) {
-    const match = await this.matchModel.findOne({ id })
+    const match = await this.matchRepository.findOne({ id })
     if (!match) return {
       error: 'Match not exists'
     }

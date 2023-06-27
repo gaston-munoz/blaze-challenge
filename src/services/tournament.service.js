@@ -45,6 +45,7 @@ export class TournamentService {
       emblem: tournament.emblem,
       areaName: tournament.area.name,
       areaFlag: tournament.area.flag,
+      currentSeason: tournament.currentSeason.startDate,
       userId: user.id,
     } 
     const savedTournament = await this.tournamentRepository.create(tournamentToSave)
@@ -68,6 +69,13 @@ export class TournamentService {
     await this.tournamentRepository.deleteById(id)
 
     return { tournament }
+  }
+
+  async findPopularTables() {
+    const tables = await this.footballRepository.getAllPopularTables()
+    return {
+      tables
+    }
   }
 }
 

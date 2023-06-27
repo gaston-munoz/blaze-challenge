@@ -95,4 +95,19 @@ const getMatchesByCode = async (req, res, next) => {
   }
 }
 
-export { create, getAll, getAllByUser, deleteById, getById, getMatchesByCode }
+const getPopularTables = async (req, res, next) => {
+  try {
+    const tournamentService = new TournamentService()
+    const allTournaments = await tournamentService.findPopularTables()
+  
+    res.send({
+      success: true,
+      data: allTournaments,
+    })
+  } catch (error) {
+    next(genError(STATUS_CODE.INT_SERV_ERROR, error.message))
+  }
+}
+
+
+export { create, getAll, getAllByUser, deleteById, getById, getMatchesByCode, getPopularTables }

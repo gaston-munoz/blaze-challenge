@@ -17,6 +17,10 @@ router
   .get(authenticate([ROLES.USER]), TournamentController.getAllByUser)
 
 router
+  .route('/popular-tables')
+  .get(TournamentController.getPopularTables)
+
+router
   .route('/:id')
   .get(validateParamId, TournamentController.getById)
   .delete(authenticate([ROLES.USER]), validateParamId, TournamentController.deleteById)
@@ -24,5 +28,6 @@ router
 router
   .route('/:code/matches')
   .get(TournamentController.getMatchesByCode)
+
 
 export default router

@@ -5,12 +5,24 @@ export class FootballRepository {
   constructor(conf = null) {
     this.config = conf || config.get('footballAPI')
   }
-
+  
   getHeaders() {
     return {
       'Content-Type': 'application/json',
       'X-Auth-Token': this.config.apiKey
     }
+  }
+
+  getQueryParams(season) {
+    const cleanSeason = Number(season) || new Date().getFullYear()
+    return `?season=${Number(cleanSeason)}`
+  }
+
+  getPopularTournamentsCodes() {
+    return [
+      'SA',
+      'PD',
+    ]
   }
 
   async request(path) {
@@ -28,7 +40,7 @@ export class FootballRepository {
 
   getAllTournaments() {
     return this.request(this.config.tournamentsPath)
-  }
+  } 
 
   getByCode(code) {
     return this.request(this.config.tournamentsPath + `/${code}`)
@@ -46,8 +58,13 @@ export class FootballRepository {
     return this.request(this.config.tournamentsPath + `/${code}/` + this.config.matchesPath + this.getQueryParams(season))
   }
 
-  getQueryParams(season) {
-    const cleanSeason = Number(season) || new Date().getFullYear()
-    return `?season=${Number(cleanSeason)}`
+
+  async getAllPopularTables() {
+    const pr = this.getPopularTournamentsCodes().map(code => this.request(this.config.tournamentsPath + `/${code}/standings`))
+    const result = await Promise.all(pr)
+    const dataResult = result.map(({ competition, standings }) => ({ competition, standings }))
+    return dataResult
   }
+
+
 }

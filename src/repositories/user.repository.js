@@ -1,7 +1,7 @@
 import { UserModel } from '../storage/models/index.js'
 import { BaseRepository } from './base.repository.js'
 
-export class UserRepository extends BaseRepository{
+export class UserRepository extends BaseRepository {
   constructor(model = null) {
     super(model || UserModel)
   }
