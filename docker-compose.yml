@@ -14,19 +14,19 @@ services:
       POSTGRES_USER: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
 
-  # api:
-  #   container_name: api
-  #   image: api
-  #   build: .
-  #   environment:
-  #     - NODE_ENV=development
-  #   ports:
-  #     - "5000:5000"
-  #   depends_on:
-  #     - postgres
-  #   links:
-  #     - postgres:postgres-container
-  #   restart: on-failure
+  api:
+    container_name: api
+    image: api
+    build: .
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres-container
+    restart: on-failure
 
 volumes:
   db: 
