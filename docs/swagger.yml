@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: Football Tournament API
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost
+  - url: https://api.football-data.org
+paths:
+  /api/sign-in:
+    post:
+      summary: SIGN IN
+      description: SIGN IN
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: gaston@nasa.comm
+                password:
+                  type: string
+                  example: mysecret
+            example:
+              email: gaston@nasa.comm
+              password: mysecret
+      responses:
+        '200':
+          description: ''
+  /api/sign-up:
+    post:
+      summary: SIGN UP
+      description: SIGN UP
+      operationId: signUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: gaston@nasa.comm
+                name:
+                  type: string
+                  example: gaston
+                password:
+                  type: string
+                  example: mysecret
+            example:
+              email: gaston@nasa.comm
+              name: gaston
+              password: mysecret
+      responses:
+        '200':
+          description: ''
+  /api/tournaments:
+    get:
+      summary: GET ALL TOURNAMENT
+      description: GET ALL TOURNAMENT
+      operationId: getAllTournament
+      parameters:
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+            example: 4fc738c480b64f73a0dc911a905a9b23
+      requestBody:
+        content:
+          text/plain:
+            example: ''
+      responses:
+        '200':
+          description: ''
+    post:
+      summary: CREATE TOURNAMENT
+      description: CREATE TOURNAMENT
+      operationId: createTournament
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb20iLCJuYW1lIjoiZ2FzdG9uIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODczMjg1MTYsImV4cCI6MTY4NzQxNDkxNn0.Rw-0GbuluTZqUn1MyEDR2KDxL1GEWBijvmqMi2JYVHU
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tournamentCode:
+                  type: string
+                  example: CL
+            example:
+              tournamentCode: CL
+      responses:
+        '200':
+          description: ''
+  /api/matches/:
+    post:
+      summary: CREATE MATCH
+      description: CREATE MATCH
+      operationId: createMatch
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb21tIiwibmFtZSI6Imdhc3RvbiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3MzMxNTk2LCJleHAiOjE2ODc0MTc5OTZ9.tOyX_xbm0Q1p-GkxbkjovAzCsBKw6prV3etiHVsQKjM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matchId:
+                  type: string
+                  example: CL
+            example:
+              matchId: CL
+      responses:
+        '200':
+          description: ''
+  /api/matches:
+    get:
+      summary: GET ALL MATCHES
+      description: GET ALL MATCHES
+      operationId: getAllMatches
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb20iLCJuYW1lIjoiZ2FzdG9uIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODczMjg1MTYsImV4cCI6MTY4NzQxNDkxNn0.Rw-0GbuluTZqUn1MyEDR2KDxL1GEWBijvmqMi2JYVHU
+      responses:
+        '200':
+          description: ''
+  /api/matches/users:
+    get:
+      summary: GET ALL USER MATCHES
+      description: GET ALL USER MATCHES
+      operationId: getAllUserMatches
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJnYXN0b25AbmFzYS5jb21tIiwibmFtZSI6Imdhc3RvbiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3MzMxMzc3LCJleHAiOjE2ODc0MTc3Nzd9.s8N0o_xwSIJfofDhEOhWsxqRxDprOhC3LoNHObYzbr4
+      responses:
+        '200':
+          description: ''
+  /api/tournaments/users:
+    get:
+      summary: GET BY USER TOURNAMENT
+      description: GET BY USER TOURNAMENT
+      operationId: getByUserTournament
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb20iLCJuYW1lIjoiZ2FzdG9uIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODczMjM5ODMsImV4cCI6MTY4NzQxMDM4M30.W4NtEX57IH45sU1TVqbFOAPlMpxIVjOYYQ5aowpT95Y
+      requestBody:
+        content:
+          text/plain:
+            example: ''
+      responses:
+        '200':
+          description: ''
+  /api/tournaments/CL/matches:
+    get:
+      summary: GET MATCHES TOURNAMENT
+      description: GET MATCHES TOURNAMENT
+      operationId: getMatchesTournament
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJnYXN0b25AbmFzYS5jb21tIiwibmFtZSI6Imdhc3RvbiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3MzMxMzc3LCJleHAiOjE2ODc0MTc3Nzd9.s8N0o_xwSIJfofDhEOhWsxqRxDprOhC3LoNHObYzbr4
+      responses:
+        '200':
+          description: ''
+  /api/matches/432341:
+    get:
+      summary: GET MATCH
+      description: GET MATCH
+      operationId: getMatch
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJnYXN0b25AbmFzYS5jb21tIiwibmFtZSI6Imdhc3RvbiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3MzMxMzc3LCJleHAiOjE2ODc0MTc3Nzd9.s8N0o_xwSIJfofDhEOhWsxqRxDprOhC3LoNHObYzbr4
+      responses:
+        '200':
+          description: ''
+  /api/tournaments/1:
+    delete:
+      summary: DELETE TOURNAMENT
+      description: DELETE TOURNAMENT
+      operationId: deleteTournament
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb20iLCJuYW1lIjoiZ2FzdG9uIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODcyNDI2NjcsImV4cCI6MTY4NzMyOTA2N30.4MfnsXI41ih6maxUzwt6mXAWJMjCmbs2Q0FBxdVeXjM
+      requestBody:
+        content:
+          text/plain:
+            example: ''
+      responses:
+        '200':
+          description: ''
+  /api/matches/1:
+    delete:
+      summary: DELETE MATCH
+      description: DELETE MATCH
+      operationId: deleteMatch
+      parameters:
+        - name: X-Authorization
+          in: header
+          schema:
+            type: string
+            example: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnYXN0b25AbmFzYS5jb20iLCJuYW1lIjoiZ2FzdG9uIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODcyNDI2NjcsImV4cCI6MTY4NzMyOTA2N30.4MfnsXI41ih6maxUzwt6mXAWJMjCmbs2Q0FBxdVeXjM
+      requestBody:
+        content:
+          text/plain:
+            example: ''
+      responses:
+        '200':
+          description: ''
+  /v4/competitions/PD/standings:
+    get:
+      summary: POPULAR TABLES TOURNAMENT FOOTBALL API
+      description: POPULAR TABLES TOURNAMENT FOOTBALL API
+      operationId: popularTablesTournamentFootballApi
+      parameters:
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+            example: 4fc738c480b64f73a0dc911a905a9b23
+      responses:
+        '200':
+          description: ''
+tags: []
